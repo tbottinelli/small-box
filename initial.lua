@@ -167,7 +167,7 @@ function main(args)
     })
 
     --write density modes to H5MD file
-    local kmax = (401 + 1) / 2 * (2 * math.pi / box.length[1])
+    local kmax = (200 + 1) / 2 * (2 * math.pi / box.length[1])
     local density_wavevector = observables.utility.wavevector({box = box, wavenumber = {kmax}, filter = {1, 0, 0}, dense = true})
     local density_mode = observables.density_mode({group = all_fluid_group, wavevector = density_wavevector})
 
