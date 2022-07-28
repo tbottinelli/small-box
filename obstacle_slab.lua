@@ -56,8 +56,8 @@ function main(args)
     position = particle.data["position"]
 
     --create the slot
-    local tube = mdsim.geometries.cuboid({ lowest_corner = {-args.slab*length[1]/2, -args.pore_diameter/2, -args.pore_diameter/2 }, length = { args.slab*length[1], args.pore_diameter, args.pore_diameter } } )
-    local pore_group = mdsim.particle_groups.region_species({particle = particle, box = box, species = 0, geometry = tube, selection = 'excluded', label = 'pore'})
+    local pore = mdsim.geometries.cuboid({ lowest_corner = {-args.slab*length[1]/2, -args.pore_diameter/2, -args.pore_diameter/2 }, length = { args.slab*length[1], args.pore_diameter, args.pore_diameter } } )
+    local pore_group = mdsim.particle_groups.region_species({particle = particle, box = box, species = 0, geometry = pore, selection = 'excluded', label = 'pore'})
   
 
     --steps
@@ -74,9 +74,9 @@ function main(args)
     local phase_space = observables.phase_space({box=box, group = pore_group , every = steps})
 
     --write positions in h5 file
-    if steps > 0 then
+    --if steps > 0 then
     phase_space:writer({file=file, fields={'position'}})
-    end
+    --end
 
     --write observables to the file, find msv
    -- local interval = args.sampling.trajectory
@@ -113,6 +113,6 @@ function define_args(parser)
     parser:add_argument("time", {type = "number", default =10 , help = "integration time"})
     parser:add_argument("timestep", {type = "number", default = 0.005, help = "integration time step"})
     parser:add_argument('slab', {type = 'number', default = 0.465, help = 'box fraction occupied'})
-    parser:add_argument('pore_diameter', {type = 'number', default = 4, help = 'pore diameter'})
+    parser:add_argument('pore_diameter', {type = 'number', default = 5, help = 'pore diameter'})
 
 end

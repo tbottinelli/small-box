@@ -53,8 +53,8 @@ def main():
    #     density.append([ H5obs['region{0}/particle_number/value'.format(i)] for i in range(0,40)] )
 
     H5obs = H5['observables']
-    density = [ H5obs['region{0}/particle_number/value'.format(i)] for i in range(0,40)  ]
-    density = np.array(density)/(30*30*2.5)
+    density = [ H5obs['region{0}/particle_number/value'.format(i)] for i in range(0,16)  ]
+    density = np.array(density)/(10*25*2.5)
     density_mean = np.mean(density, axis=1)
     print(density_mean.shape) #should be 1x40 in the end
 
@@ -70,12 +70,7 @@ def main():
     plt.rc('ps',usedistiller='xpdf')
 
     dx=2.5
-    s0=0
-    TR=30
-    AT=25
-    a=0
-    Delta=7.5
-    xgrid = dx * np.arange(int((2*TR + AT + 2.0*Delta)/dx))+1.25 
+    xgrid = dx * np.arange(int((40)/dx))+1.25 
 
     # select data for plotting the potential energy as function of time
    # y0 = interp1d(xgrid, density_mean[0,:], bounds_error=False, kind='quadratic')
@@ -84,8 +79,8 @@ def main():
    # y3 = interp1d(xgrid, density_mean[3,:], bounds_error=False, kind='quadratic')
 
     grids_at = np.linspace(0, 70, num = 55, endpoint = False )
-    grids_adr = np.linspace(0,100, num =1000 , endpoint=False)
-    sym = -50
+    grids_adr = np.linspace(0,40, num =500 , endpoint=False)
+    sym = -20
 
 
 
@@ -104,10 +99,9 @@ def main():
         xlabel(r'x')
         ylabel(r'density profile')
         plt.legend()
-        hm = 25
         sym = -20
         source = 3
-        slab =18.6
+        slab = 18.6
         plt.xlim([0+sym,40+sym])
         plt.axvline(x=source+sym, color='k', linestyle='--',linewidth=0.4)
         plt.axvspan(-slab/2,slab/2, alpha=0.5, color='grey')

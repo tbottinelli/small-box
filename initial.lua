@@ -103,12 +103,13 @@ function main(args)
     
     --oss lua tables start with index 1 so this is for position x
     for i = 1,nfluid do
-        if (positions[i][1] < 0) then 
-            positions[i][1] = positions[i][1] - ((args.slab*length[1]/2) +5)
-        end
-        if (positions[i][1] >= 0) then
-            positions[i][1] = positions[i][1] + ((args.slab*length[1]/2) +5)
-        end
+       -- if (positions[i][1] < 0) then 
+         --   positions[i][1] = positions[i][1] - ((args.slab*length[1]/2) +4)
+       -- end
+       -- if (positions[i][1] >= 0) then
+         --   positions[i][1] = positions[i][1] + ((args.slab*length[1]/2) +4)
+       -- end
+       velocities[i]= {1,1,1}
     end
     for i = nfluid+1,nfluid+nobstacle do
         velocities[i] = {0,0,0}
@@ -167,7 +168,7 @@ function main(args)
     })
 
     --write density modes to H5MD file
-    local kmax = (200 + 1) / 2 * (2 * math.pi / box.length[1])
+    local kmax = (201 + 1) / 2 * (2 * math.pi / box.length[1])
     local density_wavevector = observables.utility.wavevector({box = box, wavenumber = {kmax}, filter = {1, 0, 0}, dense = true})
     local density_mode = observables.density_mode({group = all_fluid_group, wavevector = density_wavevector})
 
@@ -193,7 +194,7 @@ function define_args(parser)
 	    args[key] = value
 	    end, help = 'input file h5'})
     parser:add_argument("overwrite", {type = "boolean", default = true, help = "overwrite output file"})
-    parser:add_argument("particles", {type = "vector", dtype = "integer", default = {3000}, help = "number of particles"})
+    parser:add_argument("particles", {type = "vector", dtype = "integer", default = {2000}, help = "number of particles"})
     parser:add_argument("density", {type = "number", default = 0.35, help = "particle number density"})
     parser:add_argument("ratios", {type = "vector", dtype = "number", action = function(args, key, value)
         if #value ~= 2 and #value ~= 3 then

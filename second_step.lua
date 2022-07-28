@@ -41,7 +41,7 @@ function main(args)
     local rest_size = 40 - Source_size
     local eps = 0.001
     local source_velocity = {0.2,0,0}
-    local nobstacle = 2600
+    local nobstacle = 2350
 
     --open H5MD file for reading
     local file_read = readers.h5md({path = args.input})

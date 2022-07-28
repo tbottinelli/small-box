@@ -1,0 +1,84 @@
+[27-07-2022 15:11:07.586714] HALMD (HAL’s MD package) 1.0-alpha6-patch193 [AdResS-branch commit 36e879ed8]
+[27-07-2022 15:11:07.586844] variant: +GPU +GPU_SINGLE_PRECISION +GPU_DOUBLE_SINGLE_PRECISION +FORCE_DSFUN
+[27-07-2022 15:11:07.586860] built with GNU 8.3.0 and NVCC 9.2 for Lua 5.1.4
+[27-07-2022 15:11:07.586869] command line: halmd initial.lua -v --input obstacle_slab.h5
+[27-07-2022 15:11:07.586877] host name: merciful.imp.fu-berlin.de
+[27-07-2022 15:11:07.589659] profiler timer resolution: 1 ns
+[27-07-2022 15:11:07.590191] read from H5MD file: /srv/public/bottinelli/tecla/smallbox/obstacle_slab.h5
+[27-07-2022 15:11:07.607842] reading /particles/pore/position at step 0
+[27-07-2022 15:11:07.611265] edge lengths of simulation domain: 40 10 25
+[27-07-2022 15:11:07.617400] number of particles: 4350
+[27-07-2022 15:11:07.617433] number of particle species: 2
+[27-07-2022 15:11:07.622706] number of particles: 2350
+[27-07-2022 15:11:07.622736] number of particle species: 1
+[27-07-2022 15:11:07.642178] lattice: restrict initial particle positions to slab: 0.6 1 1
+[27-07-2022 15:11:07.642249] lattice: placing particles on fcc lattice: a = 1.66667
+[27-07-2022 15:11:07.642267] [WARNING] lattice: lattice not fully occupied (5040 sites)
+[27-07-2022 15:11:07.665796] random (GPU): random number generator type: rand48
+[27-07-2022 15:11:07.665836] random (GPU): set RNG seed: 3172307211
+[27-07-2022 15:11:07.666079] boltzmann (all): temperature of Boltzmann distribution: 1
+[27-07-2022 15:11:07.688843] lennard_jones: potential well depths: ε = [2,2]((1,1),(1,1))
+[27-07-2022 15:11:07.688901] lennard_jones: potential core width: σ = [2,2]((1,1),(1,1))
+[27-07-2022 15:11:07.694986] potential cutoff length: r_c = [2,2]((2.5,2.5),(2.5,2.5))
+[27-07-2022 15:11:07.695022] potential cutoff energy: U = [2,2]((-0.0163169,-0.0163169),(-0.0163169,-0.0163169))
+[27-07-2022 15:11:07.721304] binning (all): initial cell occupancy: 0.5
+[27-07-2022 15:11:07.721349] binning (all): neighbour list skin: 0.5
+[27-07-2022 15:11:07.721361] binning (all): number of cells per dimension: 13 3 8
+[27-07-2022 15:11:07.721371] binning (all): edge lengths of cells: 3.07692 3.33333 3.125
+[27-07-2022 15:11:07.721381] binning (all): number of placeholders per cell: 32
+[27-07-2022 15:11:07.721389] binning (all): average cell occupancy: 0.435697
+[27-07-2022 15:11:07.722101] neighbour (all ← all): neighbour list skin: 0.5
+[27-07-2022 15:11:07.722127] neighbour (all ← all): number of placeholders per neighbour list: 123
+[27-07-2022 15:11:07.722170] Hilbert sort (all): vertex recursion depth: 6
+[27-07-2022 15:11:07.730226] integration time step: 0.005
+[27-07-2022 15:11:07.730303] verlet_nvt_andersen: temperature of heat bath: 1
+[27-07-2022 15:11:07.730323] verlet_nvt_andersen: collision rate with heat bath: 10
+[27-07-2022 15:11:07.733152] [WARNING] overwrite existing file "pore_result.h5"
+[27-07-2022 15:11:07.734248] write to H5MD file: /srv/public/bottinelli/tecla/smallbox/pore_result.h5
+[27-07-2022 15:11:07.739057] binning (all): overcrowded placeholders in cell list update, increase cell size
+[27-07-2022 15:11:07.739086] binning (all): number of placeholders per cell: 64
+[27-07-2022 15:11:07.739096] binning (all): average cell occupancy: 0.217849
+[27-07-2022 15:11:07.740302] neighbour (all ← all): overcrowded placeholders in neighbour lists update, reducing occupancy
+[27-07-2022 15:11:07.740611] neighbour (all ← all): neighbour list skin: 0.5
+[27-07-2022 15:11:07.740635] neighbour (all ← all): number of placeholders per neighbour list: 246
+[27-07-2022 15:11:07.753911] wavevector: construct dense grid of wavevectors
+[27-07-2022 15:11:07.753946] wavevector: maximum wavenumber: 15.865
+[27-07-2022 15:11:07.753964] wavevector: apply filter on wavevectors: 1 0 0
+[27-07-2022 15:11:07.757791] starting simulation run over 2000 integration steps
+[27-07-2022 15:11:07.846819] binning (all): overcrowded placeholders in cell list update, increase cell size
+[27-07-2022 15:11:07.846866] binning (all): number of placeholders per cell: 128
+[27-07-2022 15:11:07.846879] binning (all): average cell occupancy: 0.108924
+[27-07-2022 15:11:07.900257] binning (all): overcrowded placeholders in cell list update, increase cell size
+[27-07-2022 15:11:07.900304] binning (all): number of placeholders per cell: 256
+[27-07-2022 15:11:07.900312] binning (all): average cell occupancy: 0.0544621
+[27-07-2022 15:11:08.049031] binning (all): overcrowded placeholders in cell list update, increase cell size
+[27-07-2022 15:11:08.049080] binning (all): number of placeholders per cell: 512
+[27-07-2022 15:11:08.049091] binning (all): average cell occupancy: 0.0272311
+[27-07-2022 15:11:10.353054] finished simulation run
+[27-07-2022 15:11:10.353146] [  0.0%] finishing simulation: 197.000 ns
+[27-07-2022 15:11:10.353166] [  0.0%] start-up of simulation: 662.000 ns
+[27-07-2022 15:11:10.353174] [  0.0%] setting particle positions on lattice: 66.667 µs
+[27-07-2022 15:11:10.353181] [  0.0%] preparation for integration step: 72.43 ns (0.37 ns, 2000 calls)
+[27-07-2022 15:11:10.353191] [  0.0%] on_append_finalize: 98.25 ns (0.41 ns, 2000 calls)
+[27-07-2022 15:11:10.353199] [  0.0%] on_append_integrate: 104.17 ns (0.36 ns, 2000 calls)
+[27-07-2022 15:11:10.353207] [  0.1%] computation of smooth_r4 Lennard-Jones potential and auxiliary variables: 1.436 ms
+[27-07-2022 15:11:10.353215] [  0.1%] on_prepend_integrate: 1.723 µs (0.076 µs, 2000 calls)
+[27-07-2022 15:11:10.353222] [  0.2%] computation of density modes for allfluid particles: 655.1 µs (1.4 µs, 6 calls)
+[27-07-2022 15:11:10.353230] [  0.2%] map particles to Hilbert curve (all): 7.510 µs (0.035 µs, 780 calls)
+[27-07-2022 15:11:10.353237] [  0.2%] zero maximum displacement (all): 4.096 µs (0.025 µs, 1560 calls)
+[27-07-2022 15:11:10.353243] [  0.3%] evaluation of observables: 3.91 µs (0.96 µs, 2000 calls)
+[27-07-2022 15:11:10.353250] [  1.0%] first half-step of velocity-Verlet: 12.714 µs (0.077 µs, 2000 calls)
+[27-07-2022 15:11:10.353257] [  1.0%] second half-step of velocity-Verlet (+ Andersen thermostat): 13.557 µs (0.049 µs, 2000 calls)
+[27-07-2022 15:11:10.353265] [  1.0%] on_integrate: 13.590 µs (0.079 µs, 2000 calls)
+[27-07-2022 15:11:10.353273] [  1.1%] on_finalize: 14.730 µs (0.056 µs, 2000 calls)
+[27-07-2022 15:11:10.353282] [  1.6%] compute maximum displacement (all): 21.293 µs (0.06 µs, 2000 calls)
+[27-07-2022 15:11:10.353314] [  2.7%] update selection of a group of particles in a region: 35.43 µs (0.1 µs, 2001 calls)
+[27-07-2022 15:11:10.353322] [  6.3%] computation of smooth_r4 Lennard-Jones potential: 81.10 µs (0.31 µs, 2000 calls)
+[27-07-2022 15:11:10.353341] [ 17.3%] rearrange particles by permutation (all): 574.0 µs (2.7 µs, 780 calls)
+[27-07-2022 15:11:10.353365] [ 17.3%] cell lists update (all): 572.4 µs (6.5 µs, 784 calls)
+[27-07-2022 15:11:10.353387] [ 34.0%] order particles along Hilbert curve (all): 1.1296 ms (0.0044 ms, 780 calls)
+[27-07-2022 15:11:10.353408] [ 34.4%] update of neighbour lists (all ← all): 1.1436 ms (0.0079 ms, 781 calls)
+[27-07-2022 15:11:10.353428] [ 97.3%] on_prepend_finalize: 1.263 ms (0.032 ms, 2000 calls)
+[27-07-2022 15:11:10.353435] [ 99.7%] MD integration step: 1.293 ms (0.032 ms, 2000 calls)
+[27-07-2022 15:11:10.353456] [100.0%] total simulation runtime: 2.595 s
+[27-07-2022 15:11:10.391370] HALMD exit
