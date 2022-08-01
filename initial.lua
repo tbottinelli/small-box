@@ -42,107 +42,120 @@ function main(args)
     local reader , sample = observables.phase_space.reader({file = file, location = {"particles", "pore"}, fields = {"position"}})
 
     reader:read_at_step(0)
-    local nobstacle = assert(sample.nparticle)
-    print(nobstacle)
+    local npore = assert(sample.nparticle)
+    print(npore)
 
-    local length = {}
-        length[1] = 40
-        length[2] = 10
-        length[3] = 25
+    local edges = mdsim.box.reader({file = file, location = {"particles", "pore"}, fields = {"box"}})
+    local box = mdsim.box({edges = edges})
 
-    local dimension = 3
     local eps = 0.01
     -- create simulation domain with periodic boundary conditions
-    local box = mdsim.box({length = length})
 
     -- create system state
-    local particle = mdsim.particle({dimension = dimension, particles = nfluid+nobstacle, species = 2})
-    local obstacle = mdsim.particle({particles = nobstacle, dimension = dimension, species = 1})
-    local obst_group = mdsim.particle_groups.all({particle = obstacle, label = "allobst"})
-    local obst_phasespace = observables.phase_space({box = box, group = obst_group})
-    obst_phasespace:set(sample)
-    local obst_pos = obstacle.data["position"]
+    local particle = {
+        fluid = mdsim.particle({dimension = 3, particles = nfluid, species = 2, label = "fluid"})
+      , pore = mdsim.particle({dimension = 3, particles = npore, species = 2, label = "pore"})
+    }
+    local all_group = {}
+    for label, p in pairs(particle) do
+    	all_group[label] = mdsim.particle_groups.all({particle = p, label = label})
+    end
+    
+    local phase_space = {}
+    for label, g in pairs(all_group) do
+	phase_space[label] = observables.phase_space({box = box, group = g})
+    end
+    phase_space["pore"]:set(sample)
 
     -- set particle species
     local species = {}
-    local positions = {}
-    for i = 1, nfluid do table.insert(species,0) end
-    for i = nfluid + 1, nfluid+nobstacle do table.insert(species, 1) end
-    particle.data["species"] = species
+    --for i = 1, nfluid do table.insert(species,0) end
+    for i = 1, npore do table.insert(species, 1) end
+    particle["pore"].data["species"] = species
 
-    --local groups = { mdsim.particle_groups.id_range({ particle = particle, range = {1,nfluid}, label = 'fluid'}),
-    --                 mdsim.particle_groups.id_range({ particle = particle, range = {nfluid + 1,nfluid+ nobstacle}, label = 'obst'})
---	     }
-
-   -- local particle_ = {
-   --   fluid = groups[1]:to_particle({label = 'fluid'})
-   -- , obst = groups[2]:to_particle({label = 'obst'})
-   -- }
-    
-   -- particle = particle_; particle_ = nil
-
+    -- calculate how to fill the box to stay inside and not overcrowd
+    margin = 1
+    offset = (args.slab*edges[1][1])/2 + margin
+    fill_box = (edges[1][1]/2 - offset)*2/edges[1][1]
+    print(fill_box)
+   
     -- set initial particle positions sequentially on an fcc lattice
-    local lattice = mdsim.positions.lattice({box = box, particle = particle, slab = {0.6,1,1}})
+    local lattice = mdsim.positions.lattice({box = box, particle = particle["fluid"], slab = {fill_box,1,1}})
     lattice:set()
-    positions = particle.data["position"]
+    local positions = particle["fluid"].data["position"]
 
-    -- select all particles
-    local allbox = mdsim.geometries.cuboid({lowest_corner = {-length[1]/2 - eps ,-length[2]/2,-length[3]/2}, length = {length[1]+2*eps,length[2],length[3]}})
-    local fluid_group = mdsim.particle_groups.region_species({ particle = particle, box = box, species=0,selection="included",label = "fluid",geometry=allbox})
-    local all_fluid_group = mdsim.particle_groups.id_range({particle = particle, range={1,nfluid},label="allfluid"})
-    local all_obst_group = mdsim.particle_groups.id_range({particle = particle, range={nfluid+1,nfluid+nobstacle},label="allobst"})
-    local all_group = mdsim.particle_groups.all({particle = particle, label="all"})
     -- set initial particle velocities
     local boltzmann = mdsim.velocities.boltzmann({
-        particle = particle
-      , group = all_group
+        particle = particle["fluid"]
+      , group = all_group["fluid"]
       , temperature = args.temperature
     })
     boltzmann:set()
-    local velocities = particle.data["velocity"]
+    local velocities = particle["fluid"].data["velocity"]
     
     --oss lua tables start with index 1 so this is for position x
+    --this moves the fluid away from the pore particles
     for i = 1,nfluid do
-       -- if (positions[i][1] < 0) then 
-         --   positions[i][1] = positions[i][1] - ((args.slab*length[1]/2) +4)
-       -- end
-       -- if (positions[i][1] >= 0) then
-         --   positions[i][1] = positions[i][1] + ((args.slab*length[1]/2) +4)
-       -- end
-       velocities[i]= {1,1,1}
+        if (positions[i][1] < 0) then 
+            positions[i][1] = positions[i][1] - ((args.slab*edges[1][1]/2) + margin)
+        end
+        if (positions[i][1] >= 0) then
+            positions[i][1] = positions[i][1] + ((args.slab*edges[1][1]/2) + margin)
+        end
     end
-    for i = nfluid+1,nfluid+nobstacle do
-        velocities[i] = {0,0,0}
-        positions[i] = obst_pos[i - nfluid]
-        --positions[i][1] = positions[i][1] + 5
-    end
-    particle.data["position"] = positions
-    particle.data["velocity"] = velocities
+    particle["fluid"].data["position"] = positions
+    particle["fluid"].data["velocity"] = velocities
 
-    local potential = mdsim.potentials.pair.lennard_jones({species = 2,
-        epsilon = 1
+    local potential = mdsim.potentials.pair.lennard_jones({species = 2
+      , epsilon = 1
       , sigma = 1
     })
-    ct = 2.5 --math.pow(2, 1 /6) 
+
+    cut = math.pow(2, 1 /6) 
     -- smoothing at potential cutoff
     potential = potential:truncate({"smooth_r4",
-       cutoff = ct
+       cutoff = {
+	       {2.5, cut}
+	     , {cut, cut}
+     }
       , h = 0.005
     })
 
-    -- compute forces
-    local force = mdsim.forces.pair({
-        box = box
-      , particle = particle
-      , potential = potential
-    })
-   -- local force1 = mdsim.forces.pair({box = box, particle = {all_fluid_group, all_fluid_group}, potential = potential})
-   -- local force2 = mdsim.forces.pair({box = box, particle = {obstacle_group, obstacle_group} , potential = potential})
+    local binning = {
+	    fluid = mdsim.binning({
+		    box = box
+		  , particle = particle["fluid"]
+		 -- , skin = 0.2
+		  , r_cut = potential.r_cut
+	  })
+	  , pore = mdsim.binning({
+		    box = box
+		  , particle = particle["pore"]
+		 -- , skin = 0.2
+		  , r_cut = potential.r_cut
+		  , occupancy = 0.5 * particle["pore"].nparticle / particle["fluid"].nparticle
+	  })
+  }
 
+    -- compute forces
+    for label, p2 in pairs(particle) do
+	   local neighbour = mdsim.neighbour({
+		   box = box
+		 , particle = {particle["fluid"], p2}
+		 , r_cut = potential.r_cut
+		 , binning = {binning["fluid"], binning[label]}
+	 })
+	   mdsim.forces.pair({
+		   box = box
+		 , particle = { particle["fluid"], p2 }
+		 , potential = potential
+		 , neighbour = neighbour
+	   })
+    end
 
     -- add velocity-Verlet integrator with Andersen thermostat (NVT)
     local integrator = mdsim.integrators.verlet_nvt_andersen({
-        box = box, group = fluid_group
+        box = box, group = all_group["fluid"]
       , particle = particle, timestep = args.timestep, temperature = args.temperature, rate = 10
     })
 
@@ -154,11 +167,12 @@ function main(args)
     local file = writers.h5md({path = ("pore_result.h5"):format(args.output), overwrite = args.overwrite})
 
     -- sample phase space
-    local phase_space = halmd.observables.phase_space({box = box, group = all_group})
-
     -- write trajectory of particle groups to H5MD file
-    phase_space:writer({file = file, fields = {"position", "species", "image", "velocity", "mass", "force"}, every = steps})
-
+    halmd.observables.phase_space({box = box, group = all_group["fluid"]})
+       :writer({file = file, fields = {"position", "species", "image", "velocity", "mass", "force"}, every = steps})
+    halmd.observables.phase_space({box = box, group = all_group["pore"]})
+       :writer({file = file, fields = {"position", "species"}, every = steps+1})
+   
     -- sample initial state
     observables.sampler:sample()
 
@@ -168,9 +182,9 @@ function main(args)
     })
 
     --write density modes to H5MD file
-    local kmax = (201 + 1) / 2 * (2 * math.pi / box.length[1])
+    local kmax = (201 + 1) / 2 * (2 * math.pi / edges[1][1])
     local density_wavevector = observables.utility.wavevector({box = box, wavenumber = {kmax}, filter = {1, 0, 0}, dense = true})
-    local density_mode = observables.density_mode({group = all_fluid_group, wavevector = density_wavevector})
+    local density_mode = observables.density_mode({group = all_group["fluid"], wavevector = density_wavevector})
 
     density_mode:writer({file = file, every = 300})
 
@@ -189,27 +203,25 @@ end
 function define_args(parser)
     parser:add_argument("output,o", {type = "string", action = parser.action.substitute_date_time,
         default = "initial", help = "prefix of output files"})
-    parser:add_argument('input', {type = 'string', action = function(args, key, value)
+    parser:add_argument("input", {type = 'string', action = function(args, key, value)
 	    readers.h5md.check(value)
 	    args[key] = value
-	    end, help = 'input file h5'})
+	    end, help = "input file h5"})
     parser:add_argument("overwrite", {type = "boolean", default = true, help = "overwrite output file"})
-    parser:add_argument("particles", {type = "vector", dtype = "integer", default = {2000}, help = "number of particles"})
-    parser:add_argument("density", {type = "number", default = 0.35, help = "particle number density"})
+    parser:add_argument("particles", {type = "vector", dtype = "integer", default = {3000}, help = "number of particles"})
+    parser:add_argument("density", {type = "number", default = 0.5, help = "particle number density"})
     parser:add_argument("ratios", {type = "vector", dtype = "number", action = function(args, key, value)
         if #value ~= 2 and #value ~= 3 then
-            error(("box ratios has invalid dimension '%d'"):format(#value), 0)
+            error(("box ratios has invalid dimension '%d' "):format(#value), 0)
         end
         args[key] = value
     end, default = {1, 1, 1}, help = "relative aspect ratios of simulation box"})
     parser:add_argument("masses", {type = "vector", dtype = "number", default = {1}, help = "particle masses"})
-    parser:add_argument("initial-temperature", {type = "number", default = 1.5, help = "initial temperature"})
-    parser:add_argument("temperature", {type = "number", default = 1, help = "target temperature"})
+    parser:add_argument("temperature", {type = "number", default = 1.5, help = "target temperature"})
     parser:add_argument("rate", {type = "number", default = 4, help = "heat bath collision rate"})
     parser:add_argument("time", {type = "number", default =10 , help = "integration time"})
     parser:add_argument("timestep", {type = "number", default = 0.005, help = "integration time step"})
-    parser:add_argument('slab',{type = 'number', default= 0.465})
-
+    parser:add_argument("slab",{type = 'number', default= 0.465})
     local sampling = parser:add_argument_group("sampling", {help = "sampling intervals (0: disabled)"})
     sampling:add_argument("trajectory", {type = "integer", help = "for trajectory"})
     sampling:add_argument("state-vars", {type = "integer", default = 10, help = "for state variables"})

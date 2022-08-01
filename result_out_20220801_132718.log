@@ -1,0 +1,33 @@
+[01-08-2022 13:27:18.800895] HALMD (HAL’s MD package) 1.0-alpha6-patch193 [AdResS-branch commit 36e879ed8]
+[01-08-2022 13:27:18.802168] variant: +GPU +GPU_SINGLE_PRECISION +GPU_DOUBLE_SINGLE_PRECISION +FORCE_DSFUN
+[01-08-2022 13:27:18.802211] built with GNU 8.3.0 and NVCC 9.2 for Lua 5.1.4
+[01-08-2022 13:27:18.802239] command line: halmd second_step.lua -v --input pore_result.h5
+[01-08-2022 13:27:18.802264] host name: bountiful.imp.fu-berlin.de
+[01-08-2022 13:27:18.805105] profiler timer resolution: 1 ns
+[01-08-2022 13:27:18.809398] read from H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/pore_result.h5
+[01-08-2022 13:27:18.826464] reading /particles/fluid/position at step 2000
+[01-08-2022 13:27:18.829650] reading /particles/fluid/velocity at step 2000
+[01-08-2022 13:27:18.830618] reading /particles/fluid/species at step 2000
+[01-08-2022 13:27:18.831042] reading /particles/fluid/mass at step 2000
+[01-08-2022 13:27:18.832242] reading /particles/pore/position at step 0
+[01-08-2022 13:27:18.832929] reading /particles/pore/species at step 0
+[01-08-2022 13:27:18.835727] reading box specification from /particles/fluid
+[01-08-2022 13:27:18.836297] edge lengths of simulation domain: 40 10 25
+[01-08-2022 13:27:18.840694] number of particles: 3000
+[01-08-2022 13:27:18.840725] number of particle species: 2
+[01-08-2022 13:27:18.845443] number of particles: 2300
+[01-08-2022 13:27:18.845474] number of particle species: 2
+[01-08-2022 13:27:18.870402] lennard_jones: potential well depths: ε = [2,2]((1,1),(1,0))
+[01-08-2022 13:27:18.870498] lennard_jones: potential core width: σ = [2,2]((1,1.5),(1.5,2))
+[01-08-2022 13:27:18.875539] potential cutoff length: r_c = [2,2]((2.5,1.12246),(1.12246,1.12246))
+[01-08-2022 13:27:18.875610] potential cutoff energy: U = [2,2]((-0.0163169,-1),(-1,-0))
+[01-08-2022 13:27:18.881030] Closing H5MD file pore_result.h5
+[01-08-2022 13:27:18.886156] integration time step: 0.002
+[01-08-2022 13:27:18.886284] random (GPU): random number generator type: rand48
+[01-08-2022 13:27:18.886341] random (GPU): set RNG seed: 554670715
+[01-08-2022 13:27:18.886760] verlet_nvt_boltzmann: temperature of Boltzmann distribution: 1
+[01-08-2022 13:27:18.886838] verlet_nvt_boltzmann: coupling interval: 63 steps
+[01-08-2022 13:27:18.886874] verlet_nvt_boltzmann: coupling rate: 7.93651 per unit time
+[01-08-2022 13:27:18.889536] integration time step: 0.002
+[01-08-2022 13:27:18.897532] write to H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/result_out_20220801_132718
+[01-08-2022 13:27:18.906061] starting simulation run over 250000 integration steps

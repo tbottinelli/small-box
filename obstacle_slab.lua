@@ -35,10 +35,7 @@ math.randomseed(os.time())
 --
 function main(args)
     -- total number of particles from sum of particles
-    local length = {}
-    	length[1]=40
-	length[2]=10
-	length[3]=25
+    local length = {40,10,25}
 
     local dimension = 3
     -- create simulation domain with periodic boundary conditions
@@ -71,11 +68,11 @@ function main(args)
     local all_group = mdsim.particle_groups.all({particle = particle, label = "all"})
 
     --sample phase space
-    local phase_space = observables.phase_space({box=box, group = pore_group , every = steps})
+    local phase_space = observables.phase_space({box=box, group = pore_group })
 
     --write positions in h5 file
     --if steps > 0 then
-    phase_space:writer({file=file, fields={'position'}})
+    phase_space:writer({file=file, fields={'position'}, every = steps})
     --end
 
     --write observables to the file, find msv
@@ -87,15 +84,15 @@ function main(args)
     observables.sampler:sample()
     
     --run simulation
-    local integrator = mdsim.integrators.verlet_nvt_andersen({
-    box=box
-    , group = pore_group
-    , particle = particle
-    , timestep = args.timestep
-    , temperature = args.temperature
-    , rate = args.rate})
+   -- local integrator = mdsim.integrators.verlet_nvt_andersen({
+   -- box=box
+   -- , group = pore_group
+   -- , particle = particle
+   -- , timestep = args.timestep
+   -- , temperature = args.temperature
+   -- , rate = args.rate})
    
-    observables.sampler:run(steps)
+  --  observables.sampler:run(steps)
 
 
 
@@ -112,7 +109,7 @@ function define_args(parser)
     parser:add_argument("rate", {type = "number", default = 4, help = "heat bath collision rate"})
     parser:add_argument("time", {type = "number", default =10 , help = "integration time"})
     parser:add_argument("timestep", {type = "number", default = 0.005, help = "integration time step"})
-    parser:add_argument('slab', {type = 'number', default = 0.465, help = 'box fraction occupied'})
+    parser:add_argument('slab', {type = 'number', default = 0.45, help = 'box fraction occupied'})
     parser:add_argument('pore_diameter', {type = 'number', default = 5, help = 'pore diameter'})
 
 end

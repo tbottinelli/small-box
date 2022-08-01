@@ -40,46 +40,63 @@ function main(args)
     local Source_size = 3
     local rest_size = 40 - Source_size
     local eps = 0.001
-    local source_velocity = {0.2,0,0}
-    local nobstacle = 2350
+    local source_velocity = {0.25,0,0}
 
-    --open H5MD file for reading
+    --open H5MD file for reading and read from last step the fluid and pore parameters
     local file_read = readers.h5md({path = args.input})
-    local reader, sample = observables.phase_space.reader({file = file_read, location = {"particles", "all"}, fields = {"position", "velocity", "species", "mass"}})
-
-    -- read phase space sample at last step in file
+    local samples = {}
+    local reader, fluid_sample = observables.phase_space.reader({file = file_read, location = {"particles", "fluid"}, fields = {"position", "velocity", "species", "mass"}})
+    samples["fluid"] = fluid_sample
     reader:read_at_step(-1)
-    -- determine system parameters from phase space sample
-    local nfluid = assert(sample.nparticle)
-    local nspecies = assert(sample.nspecies)
-    local dimension = assert(sample.dimension)
+    local nfluid = fluid_sample.nparticle
+    
+    local reader, pore_sample = observables.phase_space.reader({file = file_read, location = {"particles", "pore"}, fields = {"position", "species"}})
+    samples["pore"] = pore_sample
+    reader:read_at_step(-1)
+    local npore = pore_sample.nparticle
+   
+    -- determine system parameters 
+    local nspecies = 2
+    local dimension = 3
 
     -- read edge vectors of simulation domain from file
-    local edges = mdsim.box.reader({file = file_read, location = {"particles", "all"}})
+    local edges = mdsim.box.reader({file = file_read, location = {"particles", "fluid"}})
 
     -- create simulation domain with periodic boundary conditions
     local box = mdsim.box({edges = edges})
-    local particle = mdsim.particle({dimension = dimension, particles = nfluid, species = nspecies})
+
+    local particle = {
+	    fluid = mdsim.particle({dimension = dimension, particles = nfluid, species = nspecies, label = "fluid"})
+	  , pore = mdsim.particle({dimension = dimension, particles = npore, species = nspecies, label = "pore"})
+  }
 
     --all_group
-    local all_group = mdsim.particle_groups.all({particle = particle, label = "all"})
+    local all_group = {}
+    for label, p in pairs(particle) do
+	    all_group[label] = mdsim.particle_groups.all({particle = p , label = label})
+    end
 
-    local phase_space = observables.phase_space({box = box, group = all_group}) -- FIXME
+    local phase_space = {}
+    for label, g in pairs(all_group) do
+	    phase_space[label] = observables.phase_space({box = box, group = g})
+    end
+    phase_space["fluid"]:set(fluid_sample)
+    phase_space["pore"]:set(pore_sample)
 
-    phase_space:set(sample)
-
-    local all_fluid_group = mdsim.particle_groups.id_range({particle = particle,range={1,nfluid-nobstacle},label = "allfluid"})
-    local obstacle_group = mdsim.particle_groups.id_range({particle = particle,range={nfluid-nobstacle+1,nfluid},label = "allobstacle"})
     local source_group = mdsim.particle_groups.region({
-    particle = particle,
-    selection = "included",
-    geometry = mdsim.geometries.cuboid({lowest_corner = {-edges[1][1]/2 -eps , -edges[2][2]/2, -edges[3][3]/2},
-               				length = {Source_size + eps, edges[2][2] , edges[3][3]}}),
-    box = box, label = "source"})
+    	particle = particle["fluid"]
+   	, selection = "included"
+    	, geometry = mdsim.geometries.cuboid({lowest_corner = {-edges[1][1]/2 -eps , -edges[2][2]/2, -edges[3][3]/2}, length = {Source_size + eps, edges[2][2] , edges[3][3]}})
+	, box = box
+	, label = "source"
+	})
 
-    local rest_box = mdsim.geometries.cuboid({lowest_corner = {-edges[1][1]/2 + Source_size , -edges[2][2]/2, -edges[3][3]/2}, length = {eps + rest_size, edges[2][2] , edges[3][3]}})
-
-    local rest_group = mdsim.particle_groups.region_species({particle = particle, species = 0, selection = "included", geometry = rest_box, box = box, label = "rest"})
+    local rest_group = mdsim.particle_groups.region({
+	particle = particle["fluid"]
+    	, selection = "included"
+	, geometry = mdsim.geometries.cuboid({lowest_corner = {-edges[1][1]/2 + Source_size , -edges[2][2]/2, -edges[3][3]/2}, length = {eps + rest_size, edges[2][2] , edges[3][3]}})
+	, box = box
+	, label = "rest"})
 
     local potential = mdsim.potentials.pair.lennard_jones({
        epsilon = {
@@ -98,13 +115,45 @@ function main(args)
             {2.5,cut}
           , {cut,cut}
         }
-      , h = 0.005
-    })
+          , h = 0.005
+        })
 
     -- compute forces
-   -- local force1 = mdsim.forces.pair({box = box, particle = {all_fluid_group, all_fluid_group}, potential = potential})
-   -- local force2 = mdsim.forces.pair({box = box, particle = {obstacle_group, all_fluid_group} , potential = potential})
-    local force = mdsim.forces.pair({box=box, particle=particle,potential=potential})
+    local binning = {
+	    fluid = mdsim.binning({
+		    box = box
+		  , particle = particle["fluid"]
+--		  , skin = 1
+		  , r_cut = 2.5
+	  })
+	   , pore = mdsim.binning({
+	            box = box
+		  , particle = particle["pore"]
+--		  , skin = 1
+		  , r_cut = 2.5
+	  })
+   }
+
+	
+
+    for label, p2 in pairs(particle) do
+	    local nieghbour = mdsim.neighbour({
+		    box = box
+		  , particle = { particle["fluid"], p2 }
+		  , r_cut = potential.r_cut
+		  , binning = { binning["fluid"], binning[label] }
+	  })
+
+
+	    mdsim.forces.pair({
+		    box = box
+	          , particle = {particle["fluid"], p2} 
+		  , potential = potential
+		  , neighbour = neighbour
+	  })
+	end
+    
+    
     observables.sampler:sample()
     log.info(("Closing H5MD file %s"):format(file_read.path))
     file_read:close()
@@ -112,15 +161,15 @@ function main(args)
 
     --integrator
     local source_integrator = mdsim.integrators.verlet_nvt_boltzmann_value({group = source_group, mean_velocity = source_velocity, box = box, timestep = timestep, temperature = temperature, rate = 8})
-    local rest_integrator = mdsim.integrators.verlet({group = rest_group, box = box, timestep = timestep, temperature = temperature, rate = 8})
+    local rest_integrator = mdsim.integrators.verlet({group = rest_group, box = box, timestep = timestep})
     -- H5MD file writer
     local file_write = writers.h5md({path = args.output, mode = "truncate", overwrite = true})
 
     -- Sample macroscopic state variables.
     local msv
-    local interval = 500
+    local interval = 300
     if interval > 0 then
-        msv = observables.thermodynamics({box = box, group = all_fluid_group})
+        msv = observables.thermodynamics({box = box, group = all_group["fluid"]})
         msv:writer({file = file_write, every = interval})
     end
     local runtime = observables.runtime_estimate({
@@ -132,9 +181,10 @@ function main(args)
 
     --writer
 
-    phase_space:writer({file = file_write, fields = {"position", "velocity", "species", "force", "image","mass"}, every = 300}) -- FIXME 
+    phase_space["fluid"]:writer({file = file_write, fields = {"position", "velocity", "species", "force", "image","mass"}, every = 300})
+    phase_space["pore"]:writer({file = file_write, fields = {"position", "velocity", "species", "force", "image","mass"}, every = 300})
 
-    -- Create 40 slabs
+    -- Create 16 slabs
     local geometry = {}
     local group = {}
     local msv = {}
@@ -142,7 +192,7 @@ function main(args)
     for i= 0,15 do
         geometry[i] = mdsim.geometries.cuboid({lowest_corner = {(-edges[1][1]/2+i*2.5),-edges[2][2]/2, -edges[3][3]/2}, length = {2.5,edges[2][2], edges[3][3]}})
 
-        group[i] = mdsim.particle_groups.region_species({particle = particle,species = 0, geometry = geometry[i], selection = "included", box = box, label = string.format("%s%d",'region' , i)})
+        group[i] = mdsim.particle_groups.region_species({particle = particle["fluid"] ,species = 0, geometry = geometry[i], selection = "included", box = box, label = string.format("%s%d",'region' , i)})
     end
 
     for i= 0,15 do
@@ -162,11 +212,11 @@ function main(args)
     --write density modes to H5MD file
     local kmax = (nknots[1] + 1) / 2 * (2 * math.pi / box.length[1])
     local wavevector = observables.utility.wavevector({box = box, wavenumber = {kmax}, filter = {1, 0, 0}, dense = true})
-    local density_mode = observables.density_mode({group = all_fluid_group, wavevector = wavevector})
+    local density_mode = observables.density_mode({group = all_group["fluid"], wavevector = wavevector})
     density_mode:writer({file = file_write, every = 300})
-    local current_density_mode = observables.current_density_mode({group = all_fluid_group, wavevector = wavevector})
+    local current_density_mode = observables.current_density_mode({group = all_group["fluid"], wavevector = wavevector})
     current_density_mode:writer({file = file_write, every = 300})
-    local kinetic_energy_density_mode = observables.kinetic_energy_density_mode({group = all_fluid_group, wavevector = wavevector})
+    local kinetic_energy_density_mode = observables.kinetic_energy_density_mode({group = all_group["fluid"], wavevector = wavevector})
     kinetic_energy_density_mode:writer({file = file_write, every = 300})
 
 --average run
