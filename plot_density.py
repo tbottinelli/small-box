@@ -75,7 +75,7 @@ def main():
     # select data for plotting the potential energy as function of time
    # y0 = interp1d(xgrid, density_mean[0,:], bounds_error=False, kind='quadratic')
    # y1 = interp1d(xgrid, density_mean[1,:], bounds_error=False, kind='quadratic')
-    y2 = interp1d(xgrid, density_mean[:], bounds_error=False, kind='quadratic')
+    y2 = interp1d(xgrid, density_mean, bounds_error=False, kind='quadratic')
    # y3 = interp1d(xgrid, density_mean[3,:], bounds_error=False, kind='quadratic')
 
     grids_at = np.linspace(0, 70, num = 55, endpoint = False )

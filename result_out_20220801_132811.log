@@ -1,0 +1,168 @@
+[01-08-2022 13:28:11.561805] HALMD (HAL’s MD package) 1.0-alpha6-patch193 [AdResS-branch commit 36e879ed8]
+[01-08-2022 13:28:11.563012] variant: +GPU +GPU_SINGLE_PRECISION +GPU_DOUBLE_SINGLE_PRECISION +FORCE_DSFUN
+[01-08-2022 13:28:11.563056] built with GNU 8.3.0 and NVCC 9.2 for Lua 5.1.4
+[01-08-2022 13:28:11.563075] command line: halmd second_step.lua -v --input pore_result.h5
+[01-08-2022 13:28:11.563108] host name: bountiful.imp.fu-berlin.de
+[01-08-2022 13:28:11.565898] profiler timer resolution: 1 ns
+[01-08-2022 13:28:11.570277] read from H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/pore_result.h5
+[01-08-2022 13:28:11.588101] reading /particles/fluid/position at step 2000
+[01-08-2022 13:28:11.591485] reading /particles/fluid/velocity at step 2000
+[01-08-2022 13:28:11.592487] reading /particles/fluid/species at step 2000
+[01-08-2022 13:28:11.592964] reading /particles/fluid/mass at step 2000
+[01-08-2022 13:28:11.594236] reading /particles/pore/position at step 0
+[01-08-2022 13:28:11.594719] reading /particles/pore/species at step 0
+[01-08-2022 13:28:11.597407] reading box specification from /particles/fluid
+[01-08-2022 13:28:11.597875] edge lengths of simulation domain: 40 10 25
+[01-08-2022 13:28:11.602304] number of particles: 3000
+[01-08-2022 13:28:11.602338] number of particle species: 2
+[01-08-2022 13:28:11.606392] number of particles: 2300
+[01-08-2022 13:28:11.606431] number of particle species: 2
+[01-08-2022 13:28:11.632798] lennard_jones: potential well depths: ε = [2,2]((1,1),(1,0))
+[01-08-2022 13:28:11.632894] lennard_jones: potential core width: σ = [2,2]((1,1.5),(1.5,2))
+[01-08-2022 13:28:11.638312] potential cutoff length: r_c = [2,2]((2.5,1.12246),(1.12246,1.12246))
+[01-08-2022 13:28:11.638395] potential cutoff energy: U = [2,2]((-0.0163169,-1),(-1,-0))
+[01-08-2022 13:28:11.641609] binning (fluid): initial cell occupancy: 0.5
+[01-08-2022 13:28:11.641673] binning (fluid): neighbour list skin: 0.5
+[01-08-2022 13:28:11.641710] binning (fluid): number of cells per dimension: 11 3 7
+[01-08-2022 13:28:11.641749] binning (fluid): edge lengths of cells: 3.63636 3.33333 3.57143
+[01-08-2022 13:28:11.641796] binning (fluid): number of placeholders per cell: 32
+[01-08-2022 13:28:11.641835] binning (fluid): average cell occupancy: 0.405844
+[01-08-2022 13:28:11.642514] binning (pore): initial cell occupancy: 0.5
+[01-08-2022 13:28:11.642577] binning (pore): neighbour list skin: 0.5
+[01-08-2022 13:28:11.642622] binning (pore): number of cells per dimension: 10 3 7
+[01-08-2022 13:28:11.642661] binning (pore): edge lengths of cells: 4 3.33333 3.57143
+[01-08-2022 13:28:11.642710] binning (pore): number of placeholders per cell: 32
+[01-08-2022 13:28:11.642750] binning (pore): average cell occupancy: 0.342262
+[01-08-2022 13:28:11.652048] neighbour (fluid ← fluid): neighbour list skin: 0.5
+[01-08-2022 13:28:11.652113] neighbour (fluid ← fluid): number of placeholders per neighbour list: 85
+[01-08-2022 13:28:11.652256] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 13:28:11.658964] neighbour (fluid ← pore): neighbour list skin: 0.5
+[01-08-2022 13:28:11.659013] neighbour (fluid ← pore): number of placeholders per neighbour list: 66
+[01-08-2022 13:28:11.659091] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 13:28:11.659324] Closing H5MD file pore_result.h5
+[01-08-2022 13:28:11.664839] integration time step: 0.002
+[01-08-2022 13:28:11.664983] random (GPU): random number generator type: rand48
+[01-08-2022 13:28:11.665036] random (GPU): set RNG seed: 3418244113
+[01-08-2022 13:28:11.665448] verlet_nvt_boltzmann: temperature of Boltzmann distribution: 1
+[01-08-2022 13:28:11.665507] verlet_nvt_boltzmann: coupling interval: 63 steps
+[01-08-2022 13:28:11.665552] verlet_nvt_boltzmann: coupling rate: 7.93651 per unit time
+[01-08-2022 13:28:11.668257] integration time step: 0.002
+[01-08-2022 13:28:11.676528] write to H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/result_out_20220801_132811
+[01-08-2022 13:28:11.684634] starting simulation run over 250000 integration steps
+[01-08-2022 13:28:21.003022] 10.5 min estimated remaining runtime at step 7263
+[01-08-2022 13:33:47.027036] finished simulation run
+[01-08-2022 13:33:47.074443] wavevector: construct dense grid of wavevectors
+[01-08-2022 13:33:47.074482] wavevector: maximum wavenumber: 15.865
+[01-08-2022 13:33:47.074496] wavevector: apply filter on wavevectors: 1 0 0
+[01-08-2022 13:33:47.084431] starting simulation run over 250000 integration steps
+[01-08-2022 13:39:56.497082] finished simulation run
+[01-08-2022 13:39:56.497217] [  0.0%] finishing simulation: 208.5 ns (3.5 ns, 2 calls)
+[01-08-2022 13:39:56.497243] [  0.0%] start-up of simulation: 795 ns (154 ns, 2 calls)
+[01-08-2022 13:39:56.497253] [  0.0%] compute virial: 30.94 µs (0.16 µs, 833 calls)
+[01-08-2022 13:39:56.497262] [  0.0%] compute kinetic-energy: 31.418 µs (0.089 µs, 833 calls)
+[01-08-2022 13:39:56.497270] [  0.0%] compute kinetic-energy: 31.421 µs (0.088 µs, 833 calls)
+[01-08-2022 13:39:56.497279] [  0.0%] compute virial: 31.42 µs (0.12 µs, 833 calls)
+[01-08-2022 13:39:56.497287] [  0.0%] compute virial: 31.45 µs (0.15 µs, 833 calls)
+[01-08-2022 13:39:56.497294] [  0.0%] compute kinetic-energy: 31.557 µs (0.097 µs, 833 calls)
+[01-08-2022 13:39:56.497302] [  0.0%] compute virial: 31.66 µs (0.15 µs, 833 calls)
+[01-08-2022 13:39:56.497310] [  0.0%] compute kinetic-energy: 31.666 µs (0.091 µs, 833 calls)
+[01-08-2022 13:39:56.497318] [  0.0%] compute kinetic-energy: 31.685 µs (0.098 µs, 833 calls)
+[01-08-2022 13:39:56.497326] [  0.0%] compute kinetic-energy: 31.70 µs (0.11 µs, 833 calls)
+[01-08-2022 13:39:56.497334] [  0.0%] compute kinetic-energy: 31.732 µs (0.075 µs, 833 calls)
+[01-08-2022 13:39:56.497341] [  0.0%] compute kinetic-energy: 31.769 µs (0.075 µs, 833 calls)
+[01-08-2022 13:39:56.497349] [  0.0%] compute kinetic-energy: 31.81 µs (0.29 µs, 833 calls)
+[01-08-2022 13:39:56.497357] [  0.0%] compute kinetic-energy: 31.82 µs (0.3 µs, 833 calls)
+[01-08-2022 13:39:56.497365] [  0.0%] compute kinetic-energy: 31.85 µs (0.19 µs, 833 calls)
+[01-08-2022 13:39:56.497373] [  0.0%] compute kinetic-energy: 31.85 µs (0.48 µs, 833 calls)
+[01-08-2022 13:39:56.497380] [  0.0%] compute virial: 31.87 µs (0.2 µs, 833 calls)
+[01-08-2022 13:39:56.497388] [  0.0%] compute virial: 31.90 µs (0.14 µs, 833 calls)
+[01-08-2022 13:39:56.497396] [  0.0%] compute kinetic-energy: 31.917 µs (0.074 µs, 833 calls)
+[01-08-2022 13:39:56.497404] [  0.0%] compute kinetic-energy: 32.030 µs (0.073 µs, 833 calls)
+[01-08-2022 13:39:56.497412] [  0.0%] compute virial: 32.15 µs (0.14 µs, 833 calls)
+[01-08-2022 13:39:56.497419] [  0.0%] compute virial: 32.20 µs (0.16 µs, 833 calls)
+[01-08-2022 13:39:56.497427] [  0.0%] compute virial: 32.27 µs (0.14 µs, 833 calls)
+[01-08-2022 13:39:56.497435] [  0.0%] compute kinetic-energy: 32.504 µs (0.078 µs, 833 calls)
+[01-08-2022 13:39:56.497443] [  0.0%] compute centre-of-mass velocity: 33.06 µs (0.1 µs, 833 calls)
+[01-08-2022 13:39:56.497451] [  0.0%] compute centre-of-mass velocity: 33.55 µs (0.14 µs, 833 calls)
+[01-08-2022 13:39:56.497459] [  0.0%] compute centre-of-mass velocity: 33.58 µs (0.23 µs, 833 calls)
+[01-08-2022 13:39:56.497466] [  0.0%] compute centre-of-mass velocity: 33.59 µs (0.22 µs, 833 calls)
+[01-08-2022 13:39:56.497474] [  0.0%] compute centre-of-mass velocity: 33.95 µs (0.13 µs, 833 calls)
+[01-08-2022 13:39:56.497482] [  0.0%] compute centre-of-mass velocity: 33.96 µs (0.31 µs, 833 calls)
+[01-08-2022 13:39:56.497490] [  0.0%] compute centre-of-mass velocity: 34.02 µs (0.34 µs, 833 calls)
+[01-08-2022 13:39:56.497498] [  0.0%] compute virial: 34.04 µs (0.11 µs, 833 calls)
+[01-08-2022 13:39:56.497505] [  0.0%] compute centre-of-mass velocity: 34.06 µs (0.13 µs, 833 calls)
+[01-08-2022 13:39:56.497513] [  0.0%] compute virial: 34.14 µs (0.12 µs, 833 calls)
+[01-08-2022 13:39:56.497521] [  0.0%] compute centre-of-mass velocity: 34.37 µs (0.67 µs, 833 calls)
+[01-08-2022 13:39:56.497529] [  0.0%] update selection of a group of particles in a region: 34.561 µs (0.075 µs, 833 calls)
+[01-08-2022 13:39:56.497536] [  0.0%] update selection of a group of particles in a region: 34.671 µs (0.064 µs, 833 calls)
+[01-08-2022 13:39:56.497547] [  0.0%] update selection of a group of particles in a region: 34.675 µs (0.088 µs, 833 calls)
+[01-08-2022 13:39:56.497556] [  0.0%] update selection of a group of particles in a region: 34.80 µs (0.3 µs, 833 calls)
+[01-08-2022 13:39:56.497564] [  0.0%] update selection of a group of particles in a region: 34.86 µs (0.2 µs, 833 calls)
+[01-08-2022 13:39:56.497572] [  0.0%] update selection of a group of particles in a region: 34.91 µs (0.22 µs, 833 calls)
+[01-08-2022 13:39:56.497579] [  0.0%] update selection of a group of particles in a region: 34.93 µs (0.13 µs, 833 calls)
+[01-08-2022 13:39:56.497587] [  0.0%] update selection of a group of particles in a region: 35.01 µs (0.25 µs, 833 calls)
+[01-08-2022 13:39:56.497595] [  0.0%] compute virial: 35.010 µs (0.068 µs, 833 calls)
+[01-08-2022 13:39:56.497603] [  0.0%] compute centre-of-mass velocity: 35.04 µs (0.66 µs, 833 calls)
+[01-08-2022 13:39:56.497611] [  0.0%] update selection of a group of particles in a region: 35.23 µs (0.4 µs, 833 calls)
+[01-08-2022 13:39:56.497619] [  0.0%] update selection of a group of particles in a region: 35.27 µs (0.43 µs, 833 calls)
+[01-08-2022 13:39:56.497626] [  0.0%] update selection of a group of particles in a region: 35.28 µs (0.74 µs, 833 calls)
+[01-08-2022 13:39:56.497634] [  0.0%] update selection of a group of particles in a region: 35.38 µs (0.45 µs, 833 calls)
+[01-08-2022 13:39:56.497642] [  0.0%] update selection of a group of particles in a region: 35.47 µs (0.53 µs, 833 calls)
+[01-08-2022 13:39:56.497650] [  0.0%] compute virial: 35.50 µs (0.27 µs, 833 calls)
+[01-08-2022 13:39:56.497657] [  0.0%] compute virial: 35.521 µs (0.078 µs, 833 calls)
+[01-08-2022 13:39:56.497665] [  0.0%] update selection of a group of particles in a region: 35.53 µs (0.46 µs, 833 calls)
+[01-08-2022 13:39:56.497673] [  0.0%] update selection of a group of particles in a region: 35.61 µs (0.57 µs, 833 calls)
+[01-08-2022 13:39:56.497681] [  0.0%] compute virial: 35.855 µs (0.066 µs, 833 calls)
+[01-08-2022 13:39:56.497689] [  0.0%] compute virial: 36.00 µs (0.32 µs, 833 calls)
+[01-08-2022 13:39:56.497697] [  0.0%] compute centre-of-mass velocity: 36.28 µs (0.6 µs, 833 calls)
+[01-08-2022 13:39:56.497705] [  0.0%] compute kinetic-energy: 36.36 µs (0.14 µs, 833 calls)
+[01-08-2022 13:39:56.497713] [  0.0%] compute centre-of-mass velocity: 36.76 µs (0.59 µs, 833 calls)
+[01-08-2022 13:39:56.497720] [  0.0%] compute centre-of-mass velocity: 37.27 µs (0.23 µs, 833 calls)
+[01-08-2022 13:39:56.497728] [  0.0%] compute centre-of-mass velocity: 38.37 µs (0.43 µs, 833 calls)
+[01-08-2022 13:39:56.497736] [  0.0%] compute centre-of-mass velocity: 38.51 µs (0.52 µs, 833 calls)
+[01-08-2022 13:39:56.497743] [  0.0%] compute centre-of-mass velocity: 38.66 µs (0.21 µs, 833 calls)
+[01-08-2022 13:39:56.497751] [  0.0%] compute heat_flux: 41.37 µs (0.18 µs, 833 calls)
+[01-08-2022 13:39:56.497759] [  0.0%] compute kinetic-energy: 34.89 µs (0.17 µs, 1000 calls)
+[01-08-2022 13:39:56.497767] [  0.0%] compute heat_flux: 43.64 µs (0.13 µs, 833 calls)
+[01-08-2022 13:39:56.497774] [  0.0%] update selection of a group of particles in a region: 43.99 µs (0.75 µs, 833 calls)
+[01-08-2022 13:39:56.497782] [  0.0%] compute heat_flux: 44.09 µs (0.12 µs, 833 calls)
+[01-08-2022 13:39:56.497790] [  0.0%] compute virial: 36.74 µs (0.33 µs, 1000 calls)
+[01-08-2022 13:39:56.497798] [  0.0%] compute heat_flux: 44.14 µs (0.12 µs, 833 calls)
+[01-08-2022 13:39:56.497806] [  0.0%] compute heat_flux: 44.31 µs (0.17 µs, 833 calls)
+[01-08-2022 13:39:56.497813] [  0.0%] compute heat_flux: 44.59 µs (0.17 µs, 833 calls)
+[01-08-2022 13:39:56.497821] [  0.0%] compute heat_flux: 44.64 µs (0.2 µs, 833 calls)
+[01-08-2022 13:39:56.497829] [  0.0%] compute heat_flux: 45.046 µs (0.095 µs, 833 calls)
+[01-08-2022 13:39:56.497836] [  0.0%] compute heat_flux: 45.08 µs (0.11 µs, 833 calls)
+[01-08-2022 13:39:56.497844] [  0.0%] compute heat_flux: 45.18 µs (0.36 µs, 833 calls)
+[01-08-2022 13:39:56.497853] [  0.0%] compute heat_flux: 45.31 µs (0.16 µs, 833 calls)
+[01-08-2022 13:39:56.497861] [  0.0%] compute heat_flux: 45.59 µs (0.29 µs, 833 calls)
+[01-08-2022 13:39:56.497869] [  0.0%] compute heat_flux: 45.61 µs (0.22 µs, 833 calls)
+[01-08-2022 13:39:56.497876] [  0.0%] compute heat_flux: 45.74 µs (0.34 µs, 833 calls)
+[01-08-2022 13:39:56.497884] [  0.0%] compute heat_flux: 46.14 µs (0.52 µs, 833 calls)
+[01-08-2022 13:39:56.497892] [  0.0%] compute heat_flux: 46.30 µs (0.36 µs, 833 calls)
+[01-08-2022 13:39:56.497899] [  0.0%] compute centre-of-mass velocity: 40.67 µs (0.2 µs, 1000 calls)
+[01-08-2022 13:39:56.497907] [  0.0%] on_append_finalize: 87.899 ns (0.042 ns, 500000 calls)
+[01-08-2022 13:39:56.497915] [  0.0%] on_append_integrate: 89.886 ns (0.034 ns, 500000 calls)
+[01-08-2022 13:39:56.497923] [  0.0%] preparation for integration step: 244.70 ns (0.76 ns, 500000 calls)
+[01-08-2022 13:39:56.497931] [  0.0%] Boltzmann distribution: 22.61 µs (0.1 µs, 7936 calls)
+[01-08-2022 13:39:56.497939] [  0.0%] computation of density modes for fluid particles: 291.53 µs (0.73 µs, 833 calls)
+[01-08-2022 13:39:56.497947] [  0.0%] computation of kinetic energy density modes for fluid particles: 294.20 µs (0.78 µs, 833 calls)
+[01-08-2022 13:39:56.497955] [  0.0%] computation of density modes for fluid particles: 296.41 µs (0.91 µs, 833 calls)
+[01-08-2022 13:39:56.497963] [  0.1%] computation of smooth_r4 Lennard-Jones potential and auxiliary variables: 351.6 µs (1.4 µs, 1667 calls)
+[01-08-2022 13:39:56.497971] [  0.2%] computation of smooth_r4 Lennard-Jones potential and auxiliary variables: 791.40 µs (0.91 µs, 1667 calls)
+[01-08-2022 13:39:56.497979] [  0.2%] on_prepend_integrate: 3.1816 µs (0.0045 µs, 500000 calls)
+[01-08-2022 13:39:56.497987] [  0.6%] second half-step of velocity-Verlet: 7.8654 µs (0.0078 µs, 500000 calls)
+[01-08-2022 13:39:56.497995] [  0.6%] first half-step of velocity-Verlet: 8.5270 µs (0.0078 µs, 500000 calls)
+[01-08-2022 13:39:56.498003] [  0.6%] second half-step of velocity-Verlet: 8.895 µs (0.011 µs, 492064 calls)
+[01-08-2022 13:39:56.498011] [  0.7%] first half-step of velocity-Verlet: 9.2191 µs (0.0084 µs, 500000 calls)
+[01-08-2022 13:39:56.498018] [  1.4%] on_integrate: 19.531 µs (0.014 µs, 500000 calls)
+[01-08-2022 13:39:56.498026] [  1.5%] on_finalize: 20.623 µs (0.017 µs, 500000 calls)
+[01-08-2022 13:39:56.498034] [  2.0%] update selection of a group of particles in a region: 28.276 µs (0.018 µs, 500001 calls)
+[01-08-2022 13:39:56.498042] [  2.0%] evaluation of observables: 28.82 µs (0.99 µs, 500000 calls)
+[01-08-2022 13:39:56.498049] [  2.3%] update selection of a group of particles in a region: 31.993 µs (0.041 µs, 500001 calls)
+[01-08-2022 13:39:56.498057] [ 34.4%] computation of smooth_r4 Lennard-Jones potential: 485.964 µs (0.063 µs, 498334 calls)
+[01-08-2022 13:39:56.498065] [ 54.5%] computation of smooth_r4 Lennard-Jones potential: 770.640 µs (0.053 µs, 498334 calls)
+[01-08-2022 13:39:56.498073] [ 94.8%] on_prepend_finalize: 1.33626 ms (0.00013 ms, 500000 calls)
+[01-08-2022 13:39:56.498081] [ 97.9%] MD integration step: 1.38021 ms (0.00014 ms, 500000 calls)
+[01-08-2022 13:39:56.498089] [100.0%] total simulation runtime: 5.87 min (0.28 min, 2 calls)
+[01-08-2022 13:39:56.531082] HALMD exit

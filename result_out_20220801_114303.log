@@ -1,0 +1,89 @@
+[01-08-2022 11:43:03.190213] HALMD (HAL’s MD package) 1.0-alpha6-patch193 [AdResS-branch commit 36e879ed8]
+[01-08-2022 11:43:03.191208] variant: +GPU +GPU_SINGLE_PRECISION +GPU_DOUBLE_SINGLE_PRECISION +FORCE_DSFUN
+[01-08-2022 11:43:03.191224] built with GNU 8.3.0 and NVCC 9.2 for Lua 5.1.4
+[01-08-2022 11:43:03.191232] command line: halmd second_step.lua -v --input pore_result.h5
+[01-08-2022 11:43:03.191240] host name: merciful.imp.fu-berlin.de
+[01-08-2022 11:43:03.193852] profiler timer resolution: 1 ns
+[01-08-2022 11:43:03.197747] read from H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/pore_result.h5
+[01-08-2022 11:43:03.216524] reading /particles/fluid/position at step 2000
+[01-08-2022 11:43:03.219103] reading /particles/fluid/velocity at step 2000
+[01-08-2022 11:43:03.219556] reading /particles/fluid/species at step 2000
+[01-08-2022 11:43:03.219731] reading /particles/fluid/mass at step 2000
+[01-08-2022 11:43:03.220283] reading /particles/pore/position at step 0
+[01-08-2022 11:43:03.220577] reading /particles/pore/species at step 0
+[01-08-2022 11:43:03.222880] reading box specification from /particles/fluid
+[01-08-2022 11:43:03.223151] edge lengths of simulation domain: 40 10 25
+[01-08-2022 11:43:03.228298] number of particles: 3000
+[01-08-2022 11:43:03.228323] number of particle species: 2
+[01-08-2022 11:43:03.233262] number of particles: 2300
+[01-08-2022 11:43:03.233287] number of particle species: 2
+[01-08-2022 11:43:03.261924] lennard_jones: potential well depths: ε = [2,2]((1,1),(1,0))
+[01-08-2022 11:43:03.261983] lennard_jones: potential core width: σ = [2,2]((1,1.5),(1.5,2))
+[01-08-2022 11:43:03.269553] potential cutoff length: r_c = [2,2]((2.5,1.12246),(1.12246,1.12246))
+[01-08-2022 11:43:03.269591] potential cutoff energy: U = [2,2]((-0.0163169,-1),(-1,-0))
+[01-08-2022 11:43:03.273254] binning (fluid): initial cell occupancy: 0.5
+[01-08-2022 11:43:03.273283] binning (fluid): neighbour list skin: 1
+[01-08-2022 11:43:03.273294] binning (fluid): number of cells per dimension: 11 2 7
+[01-08-2022 11:43:03.273302] binning (fluid): edge lengths of cells: 3.63636 5 3.57143
+[01-08-2022 11:43:03.273313] binning (fluid): number of placeholders per cell: 64
+[01-08-2022 11:43:03.273321] binning (fluid): average cell occupancy: 0.304383
+[01-08-2022 11:43:03.273780] binning (pore): initial cell occupancy: 0.5
+[01-08-2022 11:43:03.273800] binning (pore): neighbour list skin: 1
+[01-08-2022 11:43:03.273808] binning (pore): number of cells per dimension: 10 2 7
+[01-08-2022 11:43:03.273816] binning (pore): edge lengths of cells: 4 5 3.57143
+[01-08-2022 11:43:03.273824] binning (pore): number of placeholders per cell: 64
+[01-08-2022 11:43:03.273833] binning (pore): average cell occupancy: 0.256696
+[01-08-2022 11:43:03.280416] binning parameters incompatible with neighbour list algorithm
+[01-08-2022 11:43:03.280447] fall back to 'neighbours.from_particle'
+[01-08-2022 11:43:03.280573] neighbour (fluid ← fluid): neighbour list skin: 0.5
+[01-08-2022 11:43:03.280884] neighbour (fluid ← fluid): number of placeholders per neighbour list: 85
+[01-08-2022 11:43:03.280942] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 11:43:03.299805] binning (fluid): initial cell occupancy: 0.5
+[01-08-2022 11:43:03.299848] binning (fluid): neighbour list skin: 0.5
+[01-08-2022 11:43:03.299859] binning (fluid): number of cells per dimension: 11 3 7
+[01-08-2022 11:43:03.299869] binning (fluid): edge lengths of cells: 3.63636 3.33333 3.57143
+[01-08-2022 11:43:03.299880] binning (fluid): number of placeholders per cell: 32
+[01-08-2022 11:43:03.299888] binning (fluid): average cell occupancy: 0.405844
+[01-08-2022 11:43:03.300449] neighbour (fluid ← fluid): neighbour list skin: 0.5
+[01-08-2022 11:43:03.300471] neighbour (fluid ← fluid): number of placeholders per neighbour list: 85
+[01-08-2022 11:43:03.300505] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 11:43:03.300828] binning parameters incompatible with neighbour list algorithm
+[01-08-2022 11:43:03.300848] fall back to 'neighbours.from_particle'
+[01-08-2022 11:43:03.300989] neighbour (fluid ← pore): neighbour list skin: 0.5
+[01-08-2022 11:43:03.301202] neighbour (fluid ← pore): number of placeholders per neighbour list: 85
+[01-08-2022 11:43:03.301252] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 11:43:03.301725] binning (fluid): initial cell occupancy: 0.5
+[01-08-2022 11:43:03.301746] binning (fluid): neighbour list skin: 0.5
+[01-08-2022 11:43:03.301755] binning (fluid): number of cells per dimension: 11 3 7
+[01-08-2022 11:43:03.301763] binning (fluid): edge lengths of cells: 3.63636 3.33333 3.57143
+[01-08-2022 11:43:03.301772] binning (fluid): number of placeholders per cell: 32
+[01-08-2022 11:43:03.301780] binning (fluid): average cell occupancy: 0.405844
+[01-08-2022 11:43:03.302229] binning (pore): initial cell occupancy: 0.5
+[01-08-2022 11:43:03.302247] binning (pore): neighbour list skin: 0.5
+[01-08-2022 11:43:03.302256] binning (pore): number of cells per dimension: 10 3 7
+[01-08-2022 11:43:03.302263] binning (pore): edge lengths of cells: 4 3.33333 3.57143
+[01-08-2022 11:43:03.302272] binning (pore): number of placeholders per cell: 32
+[01-08-2022 11:43:03.302279] binning (pore): average cell occupancy: 0.342262
+[01-08-2022 11:43:03.302901] neighbour (fluid ← pore): neighbour list skin: 0.5
+[01-08-2022 11:43:03.302923] neighbour (fluid ← pore): number of placeholders per neighbour list: 66
+[01-08-2022 11:43:03.302953] Hilbert sort (fluid): vertex recursion depth: 6
+[01-08-2022 11:43:03.303148] Closing H5MD file pore_result.h5
+[01-08-2022 11:43:03.307623] integration time step: 0.002
+[01-08-2022 11:43:03.307690] random (GPU): random number generator type: rand48
+[01-08-2022 11:43:03.307704] random (GPU): set RNG seed: 1779675191
+[01-08-2022 11:43:03.307994] verlet_nvt_boltzmann: temperature of Boltzmann distribution: 1
+[01-08-2022 11:43:03.308026] verlet_nvt_boltzmann: coupling interval: 63 steps
+[01-08-2022 11:43:03.308040] verlet_nvt_boltzmann: coupling rate: 7.93651 per unit time
+[01-08-2022 11:43:03.310197] integration time step: 0.002
+[01-08-2022 11:43:03.316119] write to H5MD file: /group/ag_compstatphys/data/tbottinelli/smallbox/result_out_20220801_114303
+[01-08-2022 11:43:03.322636] starting simulation run over 250000 integration steps
+[01-08-2022 11:43:03.324785] binning (fluid): overcrowded placeholders in cell list update, increase cell size
+[01-08-2022 11:43:03.324809] binning (fluid): number of placeholders per cell: 64
+[01-08-2022 11:43:03.324818] binning (fluid): average cell occupancy: 0.202922
+[01-08-2022 11:43:03.325883] neighbour (fluid ← fluid): overcrowded placeholders in neighbour lists update, reducing occupancy
+[01-08-2022 11:43:03.326095] neighbour (fluid ← fluid): neighbour list skin: 0.5
+[01-08-2022 11:43:03.326117] neighbour (fluid ← fluid): number of placeholders per neighbour list: 170
+[01-08-2022 11:43:03.328804] binning (pore): overcrowded placeholders in cell list update, increase cell size
+[01-08-2022 11:43:03.328825] binning (pore): number of placeholders per cell: 64
+[01-08-2022 11:43:03.328834] binning (pore): average cell occupancy: 0.171131
+[01-08-2022 11:43:03.329571] [WARNING] neighbour (fluid ← pore): falling back to 'naive' neighbour list algorithm due to incompatible binning modules

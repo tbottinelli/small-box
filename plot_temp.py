@@ -52,11 +52,11 @@ def main():
      #   Temperature.append( [ H5obs['region{0}/temperature/value'.format(i)] for i in range(0,40) ] )
    
     H5obs = H5['observables']
-    Temperature = [ H5obs['region{0}/temperature/value'.format(i)] for i in range(0,16) ]
+    Temperature = [ H5obs['region{0}/temperature/value'.format(i)] for i in range(0,15) ]
     Temperature = np.array(Temperature)
     print(Temperature.shape)
     mean_temp = np.mean(Temperature, axis = 1) #2 if more than 1 input
-    print(mean_temp.shape)
+    print(mean_temp)
     dx =  2.5
 	
 
@@ -80,7 +80,7 @@ def main():
     plt.rc('savefig', bbox='tight',pad_inches=0.05,dpi=600,transparent=False)
     plt.rc('ps',usedistiller='xpdf')
      
-    xgrid = dx * np.arange(int((40)/dx))+1.25 
+    xgrid = dx * np.arange(int((37.5)/dx))+1.25 
     print(xgrid)
         
     rdf0 = interp1d(xgrid, mean_temp[:] ,bounds_error=False, kind = 'quadratic')
@@ -90,7 +90,7 @@ def main():
 
     
     grids_at = np.linspace(0, 70, num = 55, endpoint = False )
-    grids_adr = np.linspace(0,40, num = 500 , endpoint=False)
+    grids_adr = np.linspace(0, 40, num = 500 , endpoint=False)
     sym = -20
 
     plt.plot(grids_adr + sym, rdf0(grids_adr) , '-',color='deepskyblue',linewidth=1.2,fillstyle='full', label = 'D10')
